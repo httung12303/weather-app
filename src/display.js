@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import * as utils from './utils';
 
 async function displayCurrentWeather(weather) {
+  console.log(weather);
   const currentWeatherEle = document.querySelector('.current-weather');
   const location = currentWeatherEle.querySelector('.location');
   const time = currentWeatherEle.querySelector('.time');
@@ -48,7 +49,7 @@ function createWeatherEle(weather, isDaily) {
   temp.className = 'temp';
   humid.className = 'humid';
 
-  time.textContent = isDaily ? format(weather.time, 'do') : format(weather.time, 'EEEE');
+  time.textContent = isDaily ? format(weather.time, 'EEEE') : format(weather.time, 'HH:MM');
   temp.textContent = weather.temp;
   humid.textContent = weather.humidity;
   icon.src = weather.icon;
