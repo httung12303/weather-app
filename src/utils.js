@@ -1,11 +1,11 @@
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
   }
 }
 
-export {capitalizeFirstLetter, removeAllChildNodes};
+function getImgSrc(path) {
+  return path.replace('//cdn.weatherapi.com', './img');
+}
+
+export {removeAllChildNodes, getImgSrc};

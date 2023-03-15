@@ -2,7 +2,7 @@ import { getWeather, getCurrentWeather } from './weather';
 import {
   displayCurrentWeather,
   displayDailyWeather,
-  displayPeriodicWeather,
+  displayHourlyWeather,
 } from './display';
 
 window.onload = () => updateWeather('Hanoi');
@@ -14,17 +14,22 @@ searchButton.onclick = () => updateWeather(searchBar.value);
 
 async function updateWeather(city) {
   try {
-    const [weather, currentWeather] = await Promise.all([getWeather(city), getCurrentWeather(city)]);
-    const {dailyWeather, periodicWeather} = weather;
-    displayDailyWeather(dailyWeather);
-    displayPeriodicWeather(periodicWeather);
+    const [currentWeather, dailyWeather, hourlyWeather] = await Promise.all([
+      getCurrentWeather(city),
+      getWeather(city),
+    ]).then(([currentWeather, weather]) => [
+      currentWeather,
+      weather.dailyWeather,
+      weather.hourlyWeather,
+    ]);
+
+    // console.log(dailyWeather);
+    // console.log(hourlyWeather);
+
     displayCurrentWeather(currentWeather);
-  } catch(err) {
+    displayDailyWeather(dailyWeather);
+    displayHourlyWeather(hourlyWeather);
+  } catch (err) {
     console.log(err);
   }
-  // getWeather(city).then(({ dailyWeather, periodicWeather }) => {
-  //   displayDailyWeather(dailyWeather);
-  //   displayPeriodicWeather(periodicWeather);
-  // });
-  // getCurrentWeather(city).then((info) => displayCurrentWeather(info));
 }

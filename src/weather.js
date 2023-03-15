@@ -1,32 +1,58 @@
-import * as utils from './utils'
+import * as utils from './utils';
 
-const API_KEY = 'dddd5ae2d6bf803bbe59dca32973d978';
+const API_KEY = 'b677ed243ead438b873131551231503';
 
 async function getCurrentWeather(city) {
   const info = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
+    `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`,
     { mode: 'cors' }
   ).then((response) => response.json());
-  const extractedInfo = extractInfo(info);
-  return {city: utils.capitalizeFirstLetter(city), ...extractedInfo};
+  return {
+    location: info.location.name,
+    time: new Date(info.location.localtime_epoch * 1000),
+    feelslike: info.current.feelslike_c,
+    humidity: info.current.humidity,
+    temp: info.current.temp_c,
+    vision: info.current.vis_km,
+    wind: info.current.wind_kph,
+    condition: info.current.condition.text,
+    icon: info.current.condition.icon,
+  };
 }
 
 async function getWeather(city) {
   const info = await fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`,
+    `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`,
     {
       mode: 'cors',
     }
   ).then((response) => response.json());
-  const extractedInfo = info.list.map((item) => extractInfo(item));
-  const dailyWeather = extractedInfo.filter((item) => item.time.getHours() >= 0 && item.time.getHours() <= 2);
-  return {dailyWeather, periodicWeather: extractedInfo};
+
+  const dailyWeather = info.forecast.forecastday.map((weather) =>
+    extractWeatherForecast(weather)
+  );
+  const hourlyWeather = extract24HoursWeather(info.forecast.forecastday[0]);
+  return {dailyWeather, hourlyWeather};
 }
 
-function extractInfo(item) {
-  const { dt, main, weather, wind } = item;
-  const time = new Date(dt * 1000);
-  return { time, main, weather, wind };
+function extractWeatherForecast(item) {
+  return {
+    time: new Date(item.date_epoch * 1000),
+    temp: item.day.avgtemp_c,
+    humidity: item.day.avghumidity,
+    condition: item.day.condition.text,
+    icon: utils.getImgSrc(item.day.condition.icon),
+  };
+}
+
+function extract24HoursWeather(item) {
+  return item.hour.map((hour) => ({
+    time: new Date(hour.time_epoch * 1000),
+    temp: hour.temp_c,
+    humidity: hour.humidity,
+    condition: hour.condition.text,
+    icon: utils.getImgSrc(hour.condition.icon),
+  }));
 }
 
 export { getWeather, getCurrentWeather };

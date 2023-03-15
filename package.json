@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/httung12303/weather-app#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",

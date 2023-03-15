@@ -8,11 +8,11 @@ async function displayCurrentWeather(weather) {
   const date = currentWeatherEle.querySelector('.date');
   const temp = currentWeatherEle.querySelector('.temp');
   const description = currentWeatherEle.querySelector('.description');
-  location.textContent = weather.city;
+  location.textContent = weather.location;
   time.textContent = format(weather.time, 'HH:MM');
   date.textContent = format(weather.time, 'EEEE, do LLLL yyyy');
-  temp.textContent = weather.main.temp;
-  description.textContent = weather.weather[0].description;
+  temp.textContent = weather.temp;
+  description.textContent = weather.condition;
 }
 
 async function displayDailyWeather(dailyWeather) {
@@ -23,36 +23,37 @@ async function displayDailyWeather(dailyWeather) {
   );
 }
 
-async function displayPeriodicWeather(periodicWeather) {
-  const periodicWeatherEle = document.querySelector('.periodic-weather');
-  utils.removeAllChildNodes(periodicWeatherEle);
-  periodicWeather.forEach((weather) =>
-    periodicWeatherEle.appendChild(createWeatherEle(weather, false))
+async function displayHourlyWeather(hourlyWeather) {
+  const hourlyWeatherEle = document.querySelector('.hourly-weather');
+  utils.removeAllChildNodes(hourlyWeatherEle);
+  hourlyWeather.forEach((weather) =>
+    hourlyWeatherEle.appendChild(createWeatherEle(weather, false))
   );
 }
 
-function createWeatherEle(weather, showDate) {
+function createWeatherEle(weather, isDaily) {
   const ele = document.createElement('div');
   const time = document.createElement('div');
   const temp = document.createElement('div');
   const humid = document.createElement('div');
+  const icon = document.createElement('img');
 
   ele.appendChild(time);
   ele.appendChild(temp);
   ele.appendChild(humid);
+  ele.appendChild(icon);
 
   ele.className = 'weather';
   time.className = 'time';
   temp.className = 'temp';
   humid.className = 'humid';
 
-  time.textContent = showDate
-    ? format(weather.time, 'EEEE')
-    : format(weather.time, 'HH:MM');
-  temp.textContent = weather.main.temp;
-  humid.textContent = weather.main.humidity;
+  time.textContent = isDaily ? format(weather.time, 'do') : format(weather.time, 'EEEE');
+  temp.textContent = weather.temp;
+  humid.textContent = weather.humidity;
+  icon.src = weather.icon;
 
   return ele;
 }
 
-export { displayCurrentWeather, displayDailyWeather, displayPeriodicWeather };
+export { displayCurrentWeather, displayDailyWeather, displayHourlyWeather };
