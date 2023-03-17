@@ -9,14 +9,13 @@ const AIR_QUALITY = [
   'Hazardous',
 ];
 
-const API_KEY = 'b677ed243ead438b873131551231503';
+const WEATHER_API_KEY = 'b677ed243ead438b873131551231503';
 
 async function getCurrentWeather(city) {
   const info = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=yes`,
+    `http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}&aqi=yes`,
     { mode: 'cors' }
   ).then((response) => response.json());
-  console.log(info);
   return {
     location: info.location.name,
     time: new Date(info.location.localtime_epoch * 1000),
@@ -28,12 +27,13 @@ async function getCurrentWeather(city) {
     condition: info.current.condition.text,
     icon: info.current.condition.icon,
     airQuality: AIR_QUALITY[info.current.air_quality['us-epa-index'] - 1],
+    isDay: info.current.is_day,
   };
 }
 
 async function getWeather(city) {
   const info = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`,
+    `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${city}&days=7`,
     {
       mode: 'cors',
     }
@@ -57,6 +57,7 @@ function extractWeatherForecast(item) {
 }
 
 function extract24HoursWeather(item) {
+  console.log(item);
   return item.hour.map((hour) => ({
     time: new Date(hour.time_epoch * 1000),
     temp: hour.temp_c,
