@@ -86,7 +86,7 @@ function createWeatherEle(weather, isDaily) {
 
   time.textContent = isDaily ? format(weather.time, 'EEEE') : hourlyTime;
   temp.textContent = weather.temp;
-  tempUnit.textContent = '℃';
+  tempUnit.textContent = '°C';
   icon.src = weather.icon;
   return ele;
 }

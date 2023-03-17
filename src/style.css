@@ -8,12 +8,12 @@
 }
 
 :root {
-  font-size: 18px;
+  font-size: 16px;
   --white: #DFDFDF;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   flex-flow: column nowrap;
