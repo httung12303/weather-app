@@ -79,7 +79,7 @@ async function updateWeather(city) {
     displayDailyWeather(dailyWeather);
     displayHourlyWeather(hourlyWeather);
   } catch (err) {
-    console.log(err);
+    alert('Make sure you searched for a valid city!');
   }
 }
 
