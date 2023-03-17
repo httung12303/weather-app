@@ -13,7 +13,7 @@ const WEATHER_API_KEY = 'b677ed243ead438b873131551231503';
 
 async function getCurrentWeather(city) {
   const info = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}&aqi=yes`,
+    `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}&aqi=yes`,
     { mode: 'cors' }
   ).then((response) => response.json());
   return {
@@ -33,7 +33,7 @@ async function getCurrentWeather(city) {
 
 async function getWeather(city) {
   const info = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${city}&days=7`,
+    `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${city}&days=7`,
     {
       mode: 'cors',
     }
