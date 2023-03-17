@@ -38,7 +38,7 @@ function displayCurrentWeatherOverview(weather) {
   const description = currentWeatherEle.querySelector('.description');
   const icon = currentWeatherEle.querySelector('.icon');
   location.textContent = weather.location;
-  time.textContent = format(weather.time, 'HH:MM');
+  time.textContent = format(weather.time, 'HH:mm');
   date.textContent = format(weather.time, 'EEEE, do LLLL yyyy');
   temp.textContent = weather.temp;
   description.textContent = weather.condition;
@@ -82,7 +82,7 @@ function createWeatherEle(weather, isDaily) {
   const hourlyTime =
     new Date().getHours() === weather.time.getHours()
       ? 'Now'
-      : `${format(weather.time, 'HH')}:00`;
+      : format(weather.time, 'HH:mm');
 
   time.textContent = isDaily ? format(weather.time, 'EEEE') : hourlyTime;
   temp.textContent = weather.temp;
