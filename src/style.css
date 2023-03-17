@@ -194,5 +194,20 @@ button:hover {
   height: 1.25rem;
 }
 
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+a {
+  font-weight: 600;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding: 0.25rem 0;
+}
+
 
 
