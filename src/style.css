@@ -8,7 +8,7 @@
 }
 
 :root {
-  font-size: 16px;
+  font-size: max(1vw, 10px);
   --white: #DFDFDF;
 }
 
@@ -95,7 +95,7 @@ main {
 .hourly-weather .group,
 .daily-weather {
   display: none;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
 }
 
@@ -149,8 +149,8 @@ button {
 
 .choose {
   background-color: var(--white);
-  width: 0.5rem;
-  height: 0.5rem;
+  width: max(0.5rem, 8px);
+  height: max(0.5rem, 8px);
   border-radius: 50%;
 }
 
